@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v6.0": {
       "Owasp2021Top10/1.0.0": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "6.0.32"
+          "Microsoft.EntityFrameworkCore": "6.0.32",
+          "Microsoft.EntityFrameworkCore.InMemory": "6.0.32"
         },
         "runtime": {
           "Owasp2021Top10.dll": {}
@@ -40,6 +41,17 @@
         }
       },
       "Microsoft.EntityFrameworkCore.Analyzers/6.0.32": {},
+      "Microsoft.EntityFrameworkCore.InMemory/6.0.32": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "6.0.32"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
+            "assemblyVersion": "6.0.32.0",
+            "fileVersion": "6.0.3224.26906"
+          }
+        }
+      },
       "Microsoft.Extensions.Caching.Abstractions/6.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "6.0.0"
@@ -139,6 +151,13 @@
       "sha512": "sha512-pOlf6xYC6MUbcDEZ019GeRBgWl4P7w9zXI12ZRYmWjsdlA/VHTKzlnRr21LlHpZNvj/0JEPzXTds399GfDESGg==",
       "path": "microsoft.entityframeworkcore.analyzers/6.0.32",
       "hashPath": "microsoft.entityframeworkcore.analyzers.6.0.32.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.InMemory/6.0.32": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-F81tHD5mvTQO+vus49yPyIjWOcvADNSSwh9kq1dfZVNuxkkOPiF9fQWTMBvuqAS0C8l8XPBmWqdcyO4IgzVifA==",
+      "path": "microsoft.entityframeworkcore.inmemory/6.0.32",
+      "hashPath": "microsoft.entityframeworkcore.inmemory.6.0.32.nupkg.sha512"
     },
     "Microsoft.Extensions.Caching.Abstractions/6.0.0": {
       "type": "package",

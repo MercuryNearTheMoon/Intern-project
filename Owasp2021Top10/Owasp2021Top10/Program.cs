@@ -1,8 +1,8 @@
+// Program.cs
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-
 using System.Security.Cryptography;
 using System.Text;
 using Owasp2021Top10.Models;
@@ -11,8 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-//builder.Services.AddDbContext<ShoppingContext>(options =>
-//    options.UseInMemoryDatabase("ShoppingDB"));
+builder.Services.AddDbContext<ShoppingContext>(options =>
+    options.UseInMemoryDatabase("ShoppingDB"));
 
 var app = builder.Build();
 
@@ -49,6 +49,16 @@ void SeedData(ShoppingContext context)
             new Product { Name = "Product 1", Price = 10.99m },
             new Product { Name = "Product 2", Price = 20.99m },
             new Product { Name = "Product 3", Price = 30.99m }
+        );
+        context.SaveChanges();
+    }
+
+    if (!context.Users.Any())
+    {
+        context.Users.AddRange(
+            new User { Username = "admin", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("adminPass123!")) },
+            new User { Username = "user1", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("userPass456!")) },
+            new User { Username = "user2", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("userPass789!")) }
         );
         context.SaveChanges();
     }
