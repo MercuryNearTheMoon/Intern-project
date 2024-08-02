@@ -1,0 +1,9 @@
+﻿@model Product
+
+<h1>@Model.Name</h1>
+<p>Price: $@Model.Price</p>
+
+<form asp-action="AddToCart" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit">Add to Cart</button>
+</form>

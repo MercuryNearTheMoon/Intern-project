@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Owasp2021Top10.props" />
+</Project>
