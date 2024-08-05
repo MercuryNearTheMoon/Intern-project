@@ -3,6 +3,7 @@ stages:
 
 variables:
   FORTIFY_ROOT: /opt/Fortify/Fortify_SCA_23.2.0/bin
+  FORTIFY_TOOL_ROOT: /opt/Fortify/Fortify_Apps_and_Tools_23.2.0/bin
 
 test:
   stage: test
@@ -14,7 +15,7 @@ test:
     - $FORTIFY_ROOT/sourceanalyzer -b "test" .
     - $FORTIFY_ROOT/sourceanalyzer -b "test" -Xmx4G -Xss24m -Xms512m -debug -verbose -scan -f "test.fpr"
     - $FORTIFY_ROOT/sourceanalyzer -b "test" -show-files
-    - $FORTIFY_ROOT/ReportGenerator -format pdf -f "test.pdf" "test.fpr"
+    - $FORTIFY_TOOL_ROOT/ReportGenerator -format pdf -f "test.pdf" "test.fpr"
   artifacts:
     paths:
       - "test.fpr"
