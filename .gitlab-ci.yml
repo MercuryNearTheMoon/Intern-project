@@ -14,7 +14,7 @@ test:
     - $FORTIFY_ROOT/sourceanalyzer -b "test" -show-files
     - $FORTIFY_ROOT/ReportGenerator -format pdf -f "test.pdf" "test.fpr"
   artifacts:
-    path:
+    paths:
       - "test.fpr"
       - "test.pdf"
     untracked: false
