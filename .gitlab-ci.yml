@@ -11,6 +11,7 @@ test:
   before_script:
     - apt-get update && sudo apt-get install -y dotnet-sdk-8.0
     - apt-get install -y dotnet-runtime-8.0
+    - dotnet --info
   script:
     - echo "Running tests"    
     - $FORTIFY_ROOT/sourceanalyzer -b "test" -clean
