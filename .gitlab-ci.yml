@@ -1,16 +1,26 @@
 stages:
   - test
 
+variables:
+  FORTIFY_ROOT: /opt/Fortify/Fortify_SCA_23.2.0/bin
 
 test:
   stage: test
   image: mcr.microsoft.com/dotnet/aspnet
   script:
     - echo "Running tests"
-    - sourceanalyzer -b "test" -clean
-    - sourceanalyzer -b "test" -Xmx4G -Xss24m -Xms512m -cp "Owasp2021Top10" -debug -verbose -scan -f "test.fpr" "Owasp2021Top10"
-    - sourceanalyzer -b "test" -show-files
-    - ReportGenerator -format pdf -f "test.pdf" "test.fpr"
+    - $FORTIFY_ROOT/sourceanalyzer -b "test" -clean
+    - $FORTIFY_ROOT/sourceanalyzer -b "test" -Xmx4G -Xss24m -Xms512m -cp "Owasp2021Top10" -debug -verbose -scan -f "test.fpr" "Owasp2021Top10"
+    - $FORTIFY_ROOT/sourceanalyzer -b "test" -show-files
+    - $FORTIFY_ROOT/ReportGenerator -format pdf -f "test.pdf" "test.fpr"
+  artifacts:
+    path:
+      - "test.fpr"
+      - "test.pdf"
+    untracked: false
+    when: on_success
+    access: all
+    expire_in: "30 days"
   tags:
     - docker
     
