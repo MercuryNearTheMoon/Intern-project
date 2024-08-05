@@ -8,11 +8,14 @@ variables:
 test:
   stage: test
   image: mcr.microsoft.com/dotnet/aspnet
+  before_script:
+    - apt-get update && sudo apt-get install -y dotnet-sdk-8.0
+    - apt-get install -y dotnet-runtime-8.0
   script:
-    - echo "Running tests"
+    - echo "Running tests"    
     - $FORTIFY_ROOT/sourceanalyzer -b "test" -clean
-    # - $FORTIFY_ROOT/sourceanalyzer -b "test" dotnet build .\Owasp2021Top10\
-    - $FORTIFY_ROOT/sourceanalyzer -b "test" .
+    - $FORTIFY_ROOT/sourceanalyzer -b "test" dotnet build .\Owasp2021Top10\
+    # - $FORTIFY_ROOT/sourceanalyzer -b "test" .
     - $FORTIFY_ROOT/sourceanalyzer -b "test" -Xmx4G -Xss24m -Xms512m -debug -verbose -scan -f "test.fpr"
     - $FORTIFY_ROOT/sourceanalyzer -b "test" -show-files
     # - $FORTIFY_TOOL_ROOT/ReportGenerator -format pdf -f "test.pdf" "test.fpr"
