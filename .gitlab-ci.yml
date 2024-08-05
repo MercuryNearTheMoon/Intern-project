@@ -4,9 +4,9 @@ stages:
 
 test:
   stage: test
+  image: mcr.microsoft.com/dotnet/aspnet
   script:
     - echo "Running tests"
-    - npm run test
     - sourceanalyzer -b "test" -clean
     - sourceanalyzer -b "test" -Xmx4G -Xss24m -Xms512m -cp "Owasp2021Top10" -debug -verbose -scan -f "test.fpr" "Owasp2021Top10"
     - sourceanalyzer -b "test" -show-files
