@@ -10,7 +10,8 @@ test:
   script:
     - echo "Running tests"
     - $FORTIFY_ROOT/sourceanalyzer -b "test" -clean
-    - $FORTIFY_ROOT/sourceanalyzer -b "test" -Xmx4G -Xss24m -Xms512m -cp "Owasp2021Top10" -debug -verbose -scan -f "test.fpr" "Owasp2021Top10"
+    - $FORTIFY_ROOT/sourceanalyzer -b "test" dotnet build "Owasp2021Top10"
+    - $FORTIFY_ROOT/sourceanalyzer -b "test" -Xmx4G -Xss24m -Xms512m -debug -verbose -scan -f "test.fpr" "Owasp2021Top10"
     - $FORTIFY_ROOT/sourceanalyzer -b "test" -show-files
     - $FORTIFY_ROOT/ReportGenerator -format pdf -f "test.pdf" "test.fpr"
   artifacts:
