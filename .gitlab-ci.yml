@@ -1,0 +1,14 @@
+stages:
+  - test
+
+
+test:
+  stage: test
+  script:
+    - echo "Running tests"
+    - npm run test
+    - sourceanalyzer -b "test" -clean
+    - sourceanalyzer -b "test" -Xmx4G -Xss24m -Xms512m -cp "Owasp2021Top10" -debug -verbose -scan -f "test.fpr" "Owasp2021Top10"
+    - sourceanalyzer -b "test" -show-files
+    - ReportGenerator -format pdf -f "test.pdf" "test.fpr"
+    
