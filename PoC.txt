@@ -1,0 +1,12 @@
+1. SQL injection
+    %' OR '1'='1'; -- 
+    %'; DROP TABLE Products; --
+    %'; DROP TABLE Products; --
+
+2. Identification and Authentication Failures
+    SELECT * FROM Users WHERE Username = '{1}' AND Password = '{2}'
+        data = {
+        "Username": "admin",
+        "Password": "' OR '1'='1"
+    }
+

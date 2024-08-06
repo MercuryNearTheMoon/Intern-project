@@ -12,7 +12,7 @@ namespace Owasp2021Top10.Controllers
         private readonly ShoppingContext _context;
 
         public HomeController(ShoppingContext context)
-        {
+        {   
             _context = context;
         }
 
@@ -27,7 +27,7 @@ namespace Owasp2021Top10.Controllers
             // OWASP A03:2021 - Injection
             // 注意：這仍然是不安全的，因為它直接將用戶輸入拼接到查詢中
             var products = _context.Products
-                .Where(p => EF.Functions.Like(p.Name, $"%{query}%"))
+                .FromSqlRaw($"SELECT * FROM Products WHERE Name LIKE '%{query}%'")
                 .ToList();
             return View("Index", products);
         }
@@ -43,6 +43,10 @@ namespace Owasp2021Top10.Controllers
             }
             return View("Login");
         }
+        public IActionResult Login()
+        {
+            return View();
+        }
 
         [HttpPost]
         public IActionResult Register(User user)
@@ -52,6 +56,10 @@ namespace Owasp2021Top10.Controllers
             _context.Users.Add(user);
             _context.SaveChanges();
             return RedirectToAction("Index");
+        }
+        public IActionResult Register()
+        {
+            return View();
         }
 
         public IActionResult ProductDetails(int id)
@@ -75,6 +83,11 @@ namespace Owasp2021Top10.Controllers
             // OWASP A05:2021 - Security Misconfiguration
             // Detailed error information exposed
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
         }
     }
 }

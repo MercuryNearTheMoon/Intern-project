@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\becklin\\Desktop\\Repo\\SampleCode\\owasp2021top10\\owasp_intern\\Owasp2021Top10\\Owasp2021Top10\\Owasp2021Top10.csproj": {}
+    "C:\\Users\\mercuryhuang\\owasp_intern\\Owasp2021Top10\\Owasp2021Top10\\Owasp2021Top10.csproj": {}
   },
   "projects": {
-    "C:\\Users\\becklin\\Desktop\\Repo\\SampleCode\\owasp2021top10\\owasp_intern\\Owasp2021Top10\\Owasp2021Top10\\Owasp2021Top10.csproj": {
+    "C:\\Users\\mercuryhuang\\owasp_intern\\Owasp2021Top10\\Owasp2021Top10\\Owasp2021Top10.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\becklin\\Desktop\\Repo\\SampleCode\\owasp2021top10\\owasp_intern\\Owasp2021Top10\\Owasp2021Top10\\Owasp2021Top10.csproj",
+        "projectUniqueName": "C:\\Users\\mercuryhuang\\owasp_intern\\Owasp2021Top10\\Owasp2021Top10\\Owasp2021Top10.csproj",
         "projectName": "Owasp2021Top10",
-        "projectPath": "C:\\Users\\becklin\\Desktop\\Repo\\SampleCode\\owasp2021top10\\owasp_intern\\Owasp2021Top10\\Owasp2021Top10\\Owasp2021Top10.csproj",
-        "packagesPath": "C:\\Users\\becklin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\becklin\\Desktop\\Repo\\SampleCode\\owasp2021top10\\owasp_intern\\Owasp2021Top10\\Owasp2021Top10\\obj\\",
+        "projectPath": "C:\\Users\\mercuryhuang\\owasp_intern\\Owasp2021Top10\\Owasp2021Top10\\Owasp2021Top10.csproj",
+        "packagesPath": "C:\\Users\\mercuryhuang\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mercuryhuang\\owasp_intern\\Owasp2021Top10\\Owasp2021Top10\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\becklin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\mercuryhuang\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -34,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -47,6 +50,14 @@
             "Microsoft.EntityFrameworkCore.InMemory": {
               "target": "Package",
               "version": "[6.0.32, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.*, )"
+            },
+            "Pomelo.EntityFrameworkCore.MySql": {
+              "target": "Package",
+              "version": "[6.*, )"
             }
           },
           "imports": [
@@ -63,19 +74,19 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.12, 6.0.12]"
+              "version": "[6.0.32, 6.0.32]"
             },
             {
               "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[6.0.12, 6.0.12]"
+              "version": "[6.0.32, 6.0.32]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.12, 6.0.12]"
+              "version": "[6.0.32, 6.0.32]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.12, 6.0.12]"
+              "version": "[6.0.32, 6.0.32]"
             }
           ],
           "frameworkReferences": {
@@ -86,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303\\RuntimeIdentifierGraph.json"
         }
       }
     }
