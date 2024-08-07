@@ -40,3 +40,37 @@
                 },
                 body: new URLSearchParams({ id: "1" })
             });
+
+6. Security Misconfiguration
+    Print all error message to frontend:
+        MySqlException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--%'' at line 1
+        MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in ResultSet.cs
+        MySqlConnector.MySqlDataReader.ActivateResultSet(CancellationToken cancellationToken) in MySqlDataReader.cs
+        MySqlConnector.MySqlDataReader.NextResultAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in MySqlDataReader.cs
+        MySqlConnector.MySqlDataReader.DisposeAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in MySqlDataReader.cs
+        MySqlConnector.MySqlDataReader.Close() in MySqlDataReader.cs
+        Microsoft.EntityFrameworkCore.Storage.RelationalDataReader.Dispose()
+        Microsoft.EntityFrameworkCore.Query.Internal.FromSqlQueryingEnumerable<T>+Enumerator.Dispose()
+        System.Collections.Generic.List<T>..ctor(IEnumerable<T> collection)
+        System.Linq.Enumerable.ToList<TSource>(IEnumerable<TSource> source)
+        Owasp2021Top10.Controllers.HomeController.Search(string query) in HomeController.cs
+        +
+                    var products = _context.Products
+        lambda_method109(Closure , object , object[] )
+        Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor+SyncActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, object controller, object[] arguments)
+        Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeActionMethodAsync()
+        Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(ref State next, ref Scope scope, ref object state, ref bool isCompleted)
+        Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeNextActionFilterAsync()
+        Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+        Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(ref State next, ref Scope scope, ref object state, ref bool isCompleted)
+        Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+        Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, object state, bool isCompleted)
+        Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+        Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(ref State next, ref Scope scope, ref object state, ref bool isCompleted)
+        Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.InvokeFilterPipelineAsync()
+        Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+        Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+        Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+        Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+        Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+

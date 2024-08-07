@@ -15,7 +15,11 @@ data = {
     "id" : "1"
 }
 
-r = requests.post(url, data=data)
+cookie = {
+    "username" : "admin"
+}
+
+r = requests.post(url, data=data,cookies=cookie)
 
 print(r.status_code)
 

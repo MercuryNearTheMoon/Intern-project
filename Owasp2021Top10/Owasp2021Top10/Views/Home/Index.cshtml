@@ -1,22 +1,90 @@
 ﻿@model List<Product>
+@{
+    ViewData["Title"] = "Home";
+}
 
 <h1>Products</h1>
 
-<form asp-action="Search" method="post">
-    <input type="text" name="query" />
+<form id="searchForm" method="post">
+    <input type="text" name="query" id="query" />
     <button type="submit">Search</button>
 </form>
 
-<ul>
+<h2>Your Bill: $<span id="billValue">0.00</span></h2>
+
+<ul id="productList">
     @foreach (var product in Model)
     {
         <li>
             @product.Name - $@(product.Price % 1 == 0 ? product.Price.ToString("F0") : product.Price.ToString("F2"))
             <a asp-action="ProductDetails" asp-route-id="@product.Id">Details</a>
-            <form asp-action="AddToCart" method="post">
+            <form asp-action="AddToCart" method="post" class="addToCartForm">
                 <input type="hidden" name="id" value="@product.Id" />
                 <button type="submit">Add to Cart</button>
             </form>
         </li>
     }
 </ul>
+
+<div id="message"></div>
+
+@section Scripts {
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var query = document.getElementById('query').value;
+
+            fetch('@Url.Action("Search")', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({ query: query })
+            })
+            .then(response => response.json())
+            .then(data => {
+                var productList = document.getElementById('productList');
+                productList.innerHTML = '';
+                data.forEach(product => {
+                    var li = document.createElement('li');
+                    li.innerHTML = `${product.name} - $${(product.price % 1 == 0 ? product.price.toFixed(0) : product.price.toFixed(2))} 
+                                    <a href="@Url.Action("ProductDetails", new { id = "" })${product.id}">Details</a>
+                                    <form class="addToCartForm" method="post" action="@Url.Action("AddToCart")">
+                                        <input type="hidden" name="id" value="${product.id}" />
+                                        <button type="submit">Add to Cart</button>
+                                    </form>`;
+                    productList.appendChild(li);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        document.getElementById('productList').addEventListener('submit', function(event) {
+            if (event.target.classList.contains('addToCartForm')) {
+                event.preventDefault();
+
+                var form = event.target;
+                var formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    var messageDiv = document.getElementById('message');
+                    if (data.success) {
+                        messageDiv.innerHTML = '<p style="color: green;">' + data.message + '</p>';
+                        // 更新账单值
+                        document.getElementById('billValue').textContent = data.bill.toFixed(2);
+                    } else {
+                        messageDiv.innerHTML = '<p style="color: red;">' + data.message + '</p>';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
+    </script>
+}

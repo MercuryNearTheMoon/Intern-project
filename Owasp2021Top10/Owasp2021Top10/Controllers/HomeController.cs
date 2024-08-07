@@ -29,20 +29,45 @@ namespace Owasp2021Top10.Controllers
             var products = _context.Products
                 .FromSqlRaw($"SELECT * FROM Products WHERE Name LIKE '%{query}%'")
                 .ToList();
-            return View("Index", products);
-        }
 
+            var result = products.Select(p => new { p.Id, p.Name, p.Price }).ToList();
+
+            return Json(result);
+        }
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
-            // OWASP A07:2021 - Identification and Authentication Failures
-            var user = _context.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
-            if (user != null)
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                return RedirectToAction("Index");
+                return Json(new { success = false, message = "Username and password cannot be empty." });
             }
-            return View("Login");
+
+            try
+            {
+                var encodedPassword = Convert.ToBase64String(Encoding.UTF8.GetBytes(password));
+                var user = _context.Users.FirstOrDefault(u => u.Username == username && u.Password == encodedPassword);
+
+                if (user != null)
+                {
+                    // Set the cookie with the username without security settings
+                    var options = new CookieOptions
+                    {
+                        Expires = DateTime.UtcNow.AddDays(1),
+                        Secure = true,
+                        SameSite = SameSiteMode.None
+                    };
+                    Response.Cookies.Append("username", username, options);
+
+                    return Json(new { success = true, message = "Login successful!" });
+                }
+                return Json(new { success = false, message = "Login failed. Please check your username and password." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
+
         public IActionResult Login()
         {
             return View();
@@ -72,10 +97,28 @@ namespace Owasp2021Top10.Controllers
         [HttpPost]
         public IActionResult AddToCart(int id)
         {
-            // OWASP A04:2021 - Insecure Design
-            // No stock check, allowing potential overselling
-            // No CSRF protection
-            return RedirectToAction("Index");
+            var username = Request.Cookies["username"];
+            if (string.IsNullOrEmpty(username))
+            {
+                return Json(new { success = false, message = "User not logged in or invalid session." });
+            }
+
+            var user = _context.Users.FirstOrDefault(u => u.Username == username);
+            if (user == null)
+            {
+                return Json(new { success = false, message = "User does not exist." });
+            }
+
+            var product = _context.Products.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+            {
+                return Json(new { success = false, message = "Product does not exist." });
+            }
+
+            user.Bill += product.Price;
+            _context.SaveChanges();
+
+            return Json(new { success = true, message = "Product added to cart successfully." , bill = user.Bill});
         }
 
         public IActionResult Error()
