@@ -1,7 +1,7 @@
 ﻿@model Product
 
 <h1>@Model.Name</h1>
-<p>Price: $@Model.Price</p>
+<p>Price: $@(Model.Price % 1 == 0 ? Model.Price.ToString("F0") : Model.Price.ToString("F2"))</p>
 
 <form asp-action="AddToCart" method="post">
     <input type="hidden" name="id" value="@Model.Id" />

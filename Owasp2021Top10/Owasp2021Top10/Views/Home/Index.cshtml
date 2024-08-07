@@ -11,7 +11,7 @@
     @foreach (var product in Model)
     {
         <li>
-            @product.Name - $@product.Price
+            @product.Name - $@(product.Price % 1 == 0 ? product.Price.ToString("F0") : product.Price.ToString("F2"))
             <a asp-action="ProductDetails" asp-route-id="@product.Id">Details</a>
             <form asp-action="AddToCart" method="post">
                 <input type="hidden" name="id" value="@product.Id" />

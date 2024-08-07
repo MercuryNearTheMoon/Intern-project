@@ -149,3 +149,5 @@ StyleCopCache.xml
 
 # dotCover
 dotCover.config
+
+test.*
