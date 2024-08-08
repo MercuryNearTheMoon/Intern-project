@@ -15,7 +15,8 @@
         },
         body: new URLSearchParams({
             'id': 1 
-        })
+        }),
+        credentials: 'include'  // 這行確保請求包含cookie
     })
     .then(response => response.text())
     .then(data => {

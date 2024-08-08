@@ -1,4 +1,3 @@
-// Program.cs
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,6 +13,17 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ShoppingContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 21))));
 
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalFile",
+        builder => builder
+            .WithOrigins("null") // 允許null來源
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,6 +34,9 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Use CORS
+app.UseCors("AllowLocalFile");
 
 app.UseAuthorization();
 
@@ -43,24 +56,20 @@ app.Run();
 
 void SeedData(ShoppingContext context)
 {
-
     context.Database.EnsureDeleted();
     context.Database.EnsureCreated();
 
     context.Products.AddRange(
-            new Product { Name = "Product 1", Price = 10.99m },
-            new Product { Name = "Product 2", Price = 20.99m },
-            new Product { Name = "Product 3", Price = 30.99m }
-        );
-
+        new Product { Name = "Product 1", Price = 10.99m },
+        new Product { Name = "Product 2", Price = 20.99m },
+        new Product { Name = "Product 3", Price = 30.99m }
+    );
 
     context.Users.AddRange(
-            new User { Username = "admin", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("adminPass123!")), Bill = 0 },
-            new User { Username = "user1", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("userPass456!")), Bill = 0 },
-            new User { Username = "user2", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("userPass789!")), Bill = 0 }
-        );
-        
+        new User { Username = "admin", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("adminPass123!")), Bill = 0 },
+        new User { Username = "user1", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("userPass456!")), Bill = 0 },
+        new User { Username = "user2", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("userPass789!")), Bill = 0 }
+    );
 
     context.SaveChanges();
-
 }
