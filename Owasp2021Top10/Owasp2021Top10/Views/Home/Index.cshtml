@@ -5,7 +5,7 @@
 
 <h1>Products</h1>
 
-<form id="searchForm" method="post">
+<form id="searchForm" method="post" autocomplete="off">
     <input type="text" name="query" id="query" />
     <button type="submit">Search</button>
 </form>
@@ -34,14 +34,16 @@
             event.preventDefault();
 
             var query = document.getElementById('query').value;
+            var formData = new URLSearchParams();
+            formData.append('query', query);
 
             fetch('@Url.Action("Search")', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                     'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
                 },
-                body: JSON.stringify({ query: query })
+                body: formData.toString()
             })
             .then(response => response.json())
             .then(data => {

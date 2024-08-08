@@ -20,7 +20,7 @@
         for enc in user.Password:
             print(base64.b64decode(enc))
 
-4. Broken Access Control
+4. Insecure direct object references
     var product = _context.Products.Find(id);
         for i in range(100):
             req = request.get(url + "/Home/ProductDetails/" + str(i))
