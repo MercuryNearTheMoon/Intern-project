@@ -60,15 +60,15 @@ void SeedData(ShoppingContext context)
     context.Database.EnsureCreated();
 
     context.Products.AddRange(
-        new Product { Name = "Product 1", Price = 10.99m },
-        new Product { Name = "Product 2", Price = 20.99m },
-        new Product { Name = "Product 3", Price = 30.99m }
+        new Product { Name = "Product 1", Price = 10.99m, Quantity = 20 },
+        new Product { Name = "Product 2", Price = 20.99m, Quantity = 15 },
+        new Product { Name = "Product 3", Price = 30.99m, Quantity = 5 }
     );
 
     context.Users.AddRange(
-        new User { Username = "admin", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("adminPass123!")), Bill = 0 },
-        new User { Username = "user1", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("userPass456!")), Bill = 0 },
-        new User { Username = "user2", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("userPass789!")), Bill = 0 }
+        new User { Username = "admin", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("adminPass123!")), Bill = 0},
+        new User { Username = "user1", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("userPass456!")), Bill = 0},
+        new User { Username = "user2", Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("userPass789!")), Bill = 0}
     );
 
     context.SaveChanges();

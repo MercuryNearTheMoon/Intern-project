@@ -77,7 +77,7 @@ namespace Owasp2021Top10.Controllers
             user.Password = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(user.Password));
             _context.Users.Add(user);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Login");
         }
         public IActionResult Register()
         {
@@ -110,11 +110,20 @@ namespace Owasp2021Top10.Controllers
             {
                 return Json(new { success = false, message = "Product does not exist." });
             }
+            else if (product.Quantity == 0)
+            {
+                return Json(new { success = false, message = "Product out of stock." });
+            }
+            else
+            {
+                product.Quantity -= 1;
+                _context.SaveChanges();
+            }
 
             user.Bill += product.Price;
             _context.SaveChanges();
 
-            return Json(new { success = true, message = "Product added to cart successfully." , bill = user.Bill});
+            return Json(new { success = true, message = "Product added to cart successfully." , bill = user.Bill, quantity = product.Quantity});
         }
 
         public IActionResult Error()
