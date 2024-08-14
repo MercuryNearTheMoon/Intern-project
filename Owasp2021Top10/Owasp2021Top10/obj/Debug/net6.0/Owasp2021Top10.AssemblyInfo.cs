@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Owasp2021Top10")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5fa7e31cd0f244ae9987fc4afe1a3b01445f588c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d30a9bdcda189c4ad8c0d8556fd78ade3f23ac59")]
 [assembly: System.Reflection.AssemblyProductAttribute("Owasp2021Top10")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Owasp2021Top10")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
