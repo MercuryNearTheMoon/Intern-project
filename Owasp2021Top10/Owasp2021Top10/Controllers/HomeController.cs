@@ -126,6 +126,25 @@ namespace Owasp2021Top10.Controllers
             return Json(new { success = true, message = "Product added to cart successfully." , bill = user.Bill, quantity = product.Quantity});
         }
 
+        [HttpPut]
+        public IActionResult Restock(int id, int quantity)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.Id == id);
+            if (product == null)
+            {
+                return NotFound(new { message = "Product not found", success=false });
+            }
+
+            if (quantity <= 0)
+            {
+                return BadRequest(new { message = "Quantity must be greater than zero" , success=false });
+            }
+
+            product.Quantity += quantity;
+            _context.SaveChanges();
+
+            return Ok(new { message = "Restock successful", product,success = true });
+        }
         public IActionResult Error()
         {
             // OWASP A05:2021 - Security Misconfiguration

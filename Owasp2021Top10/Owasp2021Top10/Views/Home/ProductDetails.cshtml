@@ -9,6 +9,19 @@
     <button type="submit">Add to Cart</button>
 </form>
 
+<form id="Restock" asp-action="Restock" method="post" style="display:none;">
+    <input type="hidden" name="_method" value="PUT" />
+    <div class="form-group">
+        <label for="productId">Product ID</label>
+        <input type="number" id="productId" name="id" class="form-control" required value="@Model.Id" readonly />
+    </div>
+    <div class="form-group">
+        <label for="quantity">Restock Quantity</label>
+        <input type="number" id="quantity" name="quantity" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Restock</button>
+</form>
+
 <p id="responseMessage"></p>
 
 @section Scripts {
@@ -33,7 +46,37 @@
                     responseMessage.textContent = data.message;
                     responseMessage.style.color = "green";
                     quantityElement.textContent = data.quantity;
+                } else {
+                    responseMessage.textContent = data.message;
+                    responseMessage.style.color = "red";
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('responseMessage').textContent = "An error occurred. Please try again.";
+            });
+        });
 
+        document.getElementById('Restock').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            var form = event.target;
+            var formData = new FormData(form);
+            var actionUrl = form.action;
+
+            fetch(actionUrl, {
+                method: 'PUT',  // Use PUT method
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                var responseMessage = document.getElementById('responseMessage');
+                var quantityElement = document.getElementById('quantity');
+
+                if (data.success) {
+                    responseMessage.textContent = data.message;
+                    responseMessage.style.color = "green";
+                    quantityElement.textContent = data.product.quantity;  // Update the quantity
                 } else {
                     responseMessage.textContent = data.message;
                     responseMessage.style.color = "red";
