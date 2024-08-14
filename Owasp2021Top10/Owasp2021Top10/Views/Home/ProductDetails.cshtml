@@ -1,7 +1,7 @@
 ﻿@model Product
 
 <h1>@Model.Name</h1>
-<input id="role" type="text" style="display:none;" />
+<input id="role" type="text" style="display:none;" disabled/>
 <p>Price: $@(Model.Price % 1 == 0 ? Model.Price.ToString("F0") : Model.Price.ToString("F2"))</p>
 <p>Quantity: <span id="quantity">@Model.Quantity</span></p>
 
@@ -10,7 +10,7 @@
     <button type="submit">Add to Cart</button>
 </form>
 
-<form id="Restock" asp-action="Restock" method="post" style="display:none;">
+<form id="Restock" asp-action="Restock" method="post" style="">
     <input type="hidden" name="_method" value="PUT" />
     <div class="form-group">
         <label for="productId">Product ID</label>
@@ -30,8 +30,11 @@
         if (getCookieValue('username') == "admin")
             document.getElementById('role').value = "admin";
         else
+        {
             document.getElementById('role').value = "user";
-        
+            document.getElementById('Restock').style = "display:none;";
+        }
+
         document.getElementById('addToCartForm').addEventListener('submit', function(event) {
             event.preventDefault();
             
