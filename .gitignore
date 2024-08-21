@@ -151,3 +151,5 @@ StyleCopCache.xml
 dotCover.config
 
 test.*
+*.fpr
+Owasp2021Top10/Owasp2021Top10/obj/Debug/net6.0/Owasp2021Top10.AssemblyInfo.cs
