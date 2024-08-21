@@ -13,6 +13,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ShoppingContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 21))));
 
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+    options.Secure = CookieSecurePolicy.Always;
+});
+
 // Configure CORS
 builder.Services.AddCors(options =>
 {
@@ -34,6 +40,8 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseCookiePolicy();
 
 // Use CORS
 app.UseCors("AllowLocalFile");

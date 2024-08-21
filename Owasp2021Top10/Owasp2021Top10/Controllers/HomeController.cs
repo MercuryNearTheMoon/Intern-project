@@ -50,9 +50,7 @@ namespace Owasp2021Top10.Controllers
                 {
                     var options = new CookieOptions
                     {
-                        Expires = DateTime.UtcNow.AddDays(1),
-                        Secure = true,
-                        SameSite = SameSiteMode.None
+                        Expires = DateTime.UtcNow.AddDays(1)
                     };
                     Response.Cookies.Append("username", username, options);
 
