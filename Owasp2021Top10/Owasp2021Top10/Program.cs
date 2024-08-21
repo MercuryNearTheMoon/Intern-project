@@ -15,8 +15,8 @@ builder.Services.AddDbContext<ShoppingContext>(options =>
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
-    options.MinimumSameSitePolicy = SameSiteMode.None;
-    options.Secure = CookieSecurePolicy.Always;
+    options.MinimumSameSitePolicy = Enum.Parse<SameSiteMode>(builder.Configuration["CookiePolicyOptions:SameSite"]);
+    options.Secure = Enum.Parse<CookieSecurePolicy>(builder.Configuration["CookiePolicyOptions:Secure"]);
 });
 
 // Configure CORS
