@@ -82,10 +82,13 @@ namespace Owasp2021Top10.Controllers
             return View();
         }
 
-        public IActionResult ProductDetails(int id)
+        public IActionResult ProductDetails(int id, string role)
         {
             var product = _context.Products.Find(id);
-            return View(product);
+            if (role == "admin")
+                return View("ProductDetails", product);
+            else
+                return View("ProductDetailNormal", product);
         }
 
         [HttpPost]

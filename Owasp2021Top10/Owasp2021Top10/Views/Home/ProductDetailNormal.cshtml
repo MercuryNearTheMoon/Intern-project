@@ -1,0 +1,49 @@
+@model Product
+
+<h1>@Model.Name</h1>
+<p>Price: $@(Model.Price % 1 == 0 ? Model.Price.ToString("F0") : Model.Price.ToString("F2"))</p>
+<p>Quantity: <span id="quantity">@Model.Quantity</span></p>
+
+<form id="addToCartForm" asp-action="AddToCart" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit">Add to Cart</button>
+</form>
+
+
+<p id="responseMessage"></p>
+
+@section Scripts {
+    <script>
+
+        document.getElementById('addToCartForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            var form = event.target;
+            var formData = new FormData(form);
+            var actionUrl = form.action;
+
+            fetch(actionUrl, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                var responseMessage = document.getElementById('responseMessage');
+                var quantityElement = document.getElementById('quantity');
+
+                if (data.success) {
+                    responseMessage.textContent = data.message;
+                    responseMessage.style.color = "green";
+                    quantityElement.textContent = data.quantity;
+                } else {
+                    responseMessage.textContent = data.message;
+                    responseMessage.style.color = "red";
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('responseMessage').textContent = "An error occurred. Please try again.";
+            });
+        });
+    </script>
+}

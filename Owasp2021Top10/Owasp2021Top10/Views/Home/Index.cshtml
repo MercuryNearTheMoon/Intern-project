@@ -2,6 +2,19 @@
 @{
     ViewData["Title"] = "Home";
 }
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<head>
+    <script>
+        function getCookieValue(name) {
+            let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            return match ? match[2] : null;
+        }
+        if (getCookieValue('username') == "admin")
+            document.getElementById('role').value = "admin";
+        else
+            document.getElementById('role').value = "user";
+    </script>
+</head>
 
 <h1>Products</h1>
 
@@ -17,13 +30,14 @@
     {
         <li>
             @product.Name - $@(product.Price % 1 == 0 ? product.Price.ToString("F0") : product.Price.ToString("F2"))
-            <a asp-action="ProductDetails" asp-route-id="@product.Id">Details</a>
+            <a id="productDetailsLink-@product.Id" href="#">Details</a>
             <form asp-action="AddToCart" method="post" class="addToCartForm">
                 <input type="hidden" name="id" value="@product.Id" />
                 <button type="submit">Add to Cart</button>
             </form>
         </li>
     }
+
 </ul>
 
 <div id="message"></div>
@@ -52,7 +66,7 @@
                 data.forEach(product => {
                     var li = document.createElement('li');
                     li.innerHTML = `${product.name} - $${(product.price % 1 == 0 ? product.price.toFixed(0) : product.price.toFixed(2))} 
-                                    <a href="@Url.Action("ProductDetails", new { id = "" })${product.id}">Details</a>
+                                    <a href="@Url.Action("ProductDetails", new { id = "" })${product.id}&role=${document.getElementById('role').value}">Details</a>
                                     <form class="addToCartForm" method="post" action="@Url.Action("AddToCart")">
                                         <input type="hidden" name="id" value="${product.id}" />
                                         <button type="submit">Add to Cart</button>
@@ -86,6 +100,16 @@
                     }
                 })
                 .catch(error => console.error('Error:', error));
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            var role = document.getElementById('role').value;
+            @foreach (var product in Model)
+            {
+                <text>
+                var link = document.getElementById('productDetailsLink-@product.Id');
+                link.href = '@Url.Action("ProductDetails", "Home", new { id = @product.Id })' + '&role=' + role;
+                </text>
             }
         });
     </script>

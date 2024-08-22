@@ -1,7 +1,6 @@
-﻿@model Product
+@model Product
 
 <h1>@Model.Name</h1>
-<input id="role" type="text" style="display:none;" disabled/>
 <p>Price: $@(Model.Price % 1 == 0 ? Model.Price.ToString("F0") : Model.Price.ToString("F2"))</p>
 <p>Quantity: <span id="quantity">@Model.Quantity</span></p>
 
@@ -27,14 +26,10 @@
 
 @section Scripts {
     <script>
-        if (getCookieValue('username') == "admin")
-            document.getElementById('role').value = "admin";
-        else
-        {
-            document.getElementById('role').value = "user";
-            document.getElementById('Restock').style = "display:none;";
+        function getCookieValue(name) {
+            let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            return match ? match[2] : null;
         }
-
         document.getElementById('addToCartForm').addEventListener('submit', function(event) {
             event.preventDefault();
             
@@ -55,6 +50,11 @@
                     responseMessage.textContent = data.message;
                     responseMessage.style.color = "green";
                     quantityElement.textContent = data.quantity;
+                    if (getCookieValue('username') == "admin")
+                        document.getElementById('role').value = "admin";
+                    else
+                        document.getElementById('role').value = "user";
+                    
                 } else {
                     responseMessage.textContent = data.message;
                     responseMessage.style.color = "red";
@@ -96,12 +96,5 @@
                 document.getElementById('responseMessage').textContent = "An error occurred. Please try again.";
             });
         });
-        function getCookieValue(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-            return null;
-        }
-
     </script>
 }
