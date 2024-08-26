@@ -108,7 +108,7 @@
             {
                 <text>
                 var link = document.getElementById('productDetailsLink-@product.Id');
-                link.href = '@Url.Action("ProductDetails", "Home", new { id = @product.Id })' + '&role=' + role;
+                link.href = '@Url.Action("ProductDetails", "Home", new { id = @product.Id })' + '?role=' + role;
                 </text>
             }
         });
