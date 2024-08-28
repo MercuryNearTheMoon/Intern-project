@@ -80,10 +80,11 @@
 8. Heap Inspection:
     dotnet-dump collect -p <app-pid>
     open it with windbg:
-        1. .load c:\path\to\SOS.dll
-        2. .logopen /t c:\path\to\your\file.txt
-        3. .foreach (obj {!dumpheap -mt 7ffec25ad708}) { .printf "\n\nObject: ${obj}\n"; !do ${obj} }
-        4. .logclose
+        1. .load C:\Windows\Microsoft.NET\Framework\v4.0.30319\SOS.dll
+        2. !dumpheap -type System.String
+        3. .logopen /t c:\path\to\your\file.txt
+        4. .foreach (obj {!dumpheap -mt <MT of System.String>}) { .printf "\n\nObject: ${obj}\n"; !do ${obj} }
+        5. .logclose
     open file.txt and finded the password
 
         Object: 01a2de580e80
