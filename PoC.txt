@@ -85,3 +85,18 @@
         3. .foreach (obj {!dumpheap -mt 7ffec25ad708}) { .printf "\n\nObject: ${obj}\n"; !do ${obj} }
         4. .logclose
     open file.txt and finded the password
+
+        Object: 01a2de580e80
+        Name:        System.String
+        MethodTable: 00007ffec25ad708
+        EEClass:     00007ffec2589e38
+        Tracked Type: false
+        Size:        36(0x24) bytes
+        File:        C:\Program Files\dotnet\shared\Microsoft.NETCore.App\6.0.32\System.Private.CoreLib.dll
+        String:      pass123
+        Fields:
+                    MT    Field   Offset                 Type VT     Attr            Value Name
+        00007ffec25994b0  40002f2        8         System.Int32  1 instance                7 _stringLength
+        00007ffec24fea28  40002f3        c          System.Char  1 instance               70 _firstChar
+        00007ffec25ad708  40002f1       e8        System.String  0   static 000001a05e4313a0 Empty
+
